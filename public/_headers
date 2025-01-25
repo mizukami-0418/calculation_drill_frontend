@@ -1,0 +1,15 @@
+/*
+    # Content Security Policy (CSP) - 外部リソースの読み込みを制限
+    Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.example.com;
+
+    # クリックジャッキング防止
+    X-Frame-Options: DENY
+
+    # MIMEタイプのスニッフィング防止
+    X-Content-Type-Options: nosniff
+
+    # Referrer情報の制御
+    Referrer-Policy: no-referrer
+
+    # HSTS (HTTP Strict Transport Security) - HTTPS通信を強制
+    Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
