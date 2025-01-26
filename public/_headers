@@ -1,6 +1,6 @@
 /*
     # Content Security Policy (CSP) - 外部リソースの読み込みを制限
-    Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.example.com;
+    Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://calculation-drill-4cc436f4af9d.herokuapp.com/calculation/hello;
 
     # クリックジャッキング防止
     X-Frame-Options: DENY
