@@ -11,14 +11,12 @@ const api = axios.create({
 
 export const fetchMessage = async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}`);
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
-    return data.message;
+    const response = await api.get("/");
+    return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error; // エラーを呼び出し元に投げる
+    console.error("API Error:", error);
+    throw error;
   }
 };
+
+export default api;
