@@ -1,19 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { API_URL } from './config';
+import React, { useEffect, useState } from "react";
+import { fetchMessage } from "./utils/api";
 
 function App() {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch(`${API_URL}`)
-      .then((response) => response.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error('Error fetching data:', error));
+    const getMessage = async () => {
+      try {
+        const data = await fetchMessage();
+        setMessage(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setMessage("Failed to load message"); // エラーハンドリング
+      }
+    };
+    getMessage();
   }, []);
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>{message || 'Loading...'}</h1>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>{message || "Loading..."}</h1>
     </div>
   );
 }
