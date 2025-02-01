@@ -8,7 +8,7 @@ function App() {
     const getMessage = async () => {
       try {
         const data = await fetchMessage();
-        setMessage(data);
+        setMessage(data.message);
       } catch (error) {
         console.error("Error fetching data:", error);
         setMessage("Failed to load message"); // エラーハンドリング
