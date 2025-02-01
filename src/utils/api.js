@@ -11,7 +11,17 @@ const api = axios.create({
 
 export const fetchMessage = async () => {
   try {
-    const response = await api.get("/");
+    const response = await api.get("/hello");
+    return response.data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+};
+
+export const fetchHello = async () => {
+  try {
+    const response = await api.get("/user");
     return response.data;
   } catch (error) {
     console.error("API Error:", error);

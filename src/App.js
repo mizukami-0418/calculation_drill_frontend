@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { fetchMessage } from "./utils/api";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import HelloWorld from "./components/HelloWorld";
+import HelloUser from "./components/HelloUser";
 
-function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    const getMessage = async () => {
-      try {
-        const data = await fetchMessage();
-        setMessage(data.message);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setMessage("Failed to load message"); // エラーハンドリング
-      }
-    };
-    getMessage();
-  }, []);
-
+const App = () => {
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>{message || "Loading..."}</h1>
-    </div>
+    <Router>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Hello World</Link>
+          </li>
+          <li>
+            <Link to="/user">Hello User</Link>
+          </li>
+        </ul>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<HelloWorld />} />
+        <Route path="/user" element={<HelloUser />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
