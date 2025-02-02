@@ -5,7 +5,7 @@ const HelloUser = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const getMessage = async () => {
+    const getHello = async () => {
       try {
         const data = await fetchHello();
         setMessage(data.message);
@@ -14,7 +14,7 @@ const HelloUser = () => {
         setMessage("Failed to load message"); // エラーハンドリング
       }
     };
-    getMessage();
+    getHello();
   }, []);
 
   return (
