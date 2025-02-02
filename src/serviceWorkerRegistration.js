@@ -38,6 +38,25 @@ export function register(config) {
       } else {
         // 本番環境の場合は通常のサービスワーカーを登録
         registerValidSW(swUrl, config);
+
+        // 新しいコンテンツが利用可能かどうかを確認
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.addEventListener("updatefound", () => {
+            const newWorker = registration.installing;
+            newWorker.addEventListener("statechange", () => {
+              if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
+                if (
+                  window.confirm("新しいバージョンがあります。更新しますか？")
+                ) {
+                  window.location.reload(); // ユーザーに更新を促す
+                }
+              }
+            });
+          });
+        });
       }
     });
   }

@@ -1,6 +1,6 @@
 // service-worker.js
 // キャッシュの名前（バージョン管理のために変更可能）
-const CACHE_NAME = 'my-app-cache-v1';
+const CACHE_NAME = 'my-app-cache-v2';
 
 // キャッシュするファイルのリスト
 const URLS_TO_CACHE = [
@@ -20,15 +20,16 @@ self.addEventListener('install', event => {
             return cache.addAll(URLS_TO_CACHE);
         })
     );
+    self.skipWaiting(); // 新しいサービスワーカーをすぐにアクティブにする
 });
 
 // 古いキャッシュを削除して新しいものに置き換える
 self.addEventListener('activate', event => {
     console.log('Service Worker activating...');
     event.waitUntil(
-        caches.keys().then(cacheNames => {
+        caches.keys().then((cacheNames) => {
             return Promise.all(
-                cacheNames.map(cache => {
+                cacheNames.map((cache) => {
                     if (cache !== CACHE_NAME) {
                         console.log('Deleting old cache:', cache);
                         return caches.delete(cache);
@@ -37,6 +38,7 @@ self.addEventListener('activate', event => {
             );
         })
     );
+    clients.claim(); // 他のタブを更新する
 });
 
 // リクエストをキャッチし、キャッシュまたはネットワークからレスポンスを返す
