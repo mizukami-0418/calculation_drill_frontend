@@ -11,7 +11,7 @@ const api = axios.create({
 
 export const fetchMessage = async () => {
   try {
-    const response = await api.get("/hello");
+    const response = await api.get("/hello/");
     return response.data;
   } catch (error) {
     console.error("API Error:", error);
@@ -21,7 +21,7 @@ export const fetchMessage = async () => {
 
 export const fetchHello = async () => {
   try {
-    const response = await api.get("/user");
+    const response = await api.get("/user/");
     return response.data;
   } catch (error) {
     console.error("API Error:", error);
