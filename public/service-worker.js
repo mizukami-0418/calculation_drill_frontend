@@ -1,6 +1,6 @@
 // service-worker.js
 // キャッシュの名前（バージョン管理のために変更可能）
-const CACHE_NAME = 'my-app-cache-v2';
+const CACHE_NAME = 'my-app-cache-v3';
 
 // キャッシュするファイルのリスト
 const URLS_TO_CACHE = [
