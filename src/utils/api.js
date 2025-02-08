@@ -29,20 +29,25 @@ export const fetchHello = async () => {
   }
 };
 
+// export const fetchQuestions = async (settings) => {
+//   const response = await api.post("/calculation/generate_drill/", {
+//     body: JSON.stringify(settings),
+//   });
+//   if (!response.ok) {
+//     throw new Error("Failed to fetch questions");
+//   }
+//   const data = await response.json();
+//   return data.questions;
+// };
+
 export const fetchQuestions = async (settings) => {
-  const response = await fetch(
-    "http://localhost:8000/calculation/generate_drill/",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(settings),
-    }
-  );
-  if (!response.ok) {
+  try {
+    const response = await api.post("/calculation/generate_drill/", settings);
+    return response.data.questions;
+  } catch (error) {
+    console.error("Failed to fetch questions:", error);
     throw new Error("Failed to fetch questions");
   }
-  const data = await response.json();
-  return data.questions;
 };
 
 export default api;
