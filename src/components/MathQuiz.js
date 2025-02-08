@@ -1,13 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { API_URL } from "../config";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { fetchQuestions } from "../utils/api";
+import QuizDisplay from "./QuizDisplay";
 
-export default function MathQuiz() {
+const MathQuiz = () => {
   const [settings, setSettings] = useState({
-    useFraction: false,
-    digitType: 1,
-    allowNegative: false,
+    use_fraction: false,
+    digit_type: 1,
+    allow_negative: false,
     operator: "+",
-    numQuestions: 5,
+    num_questions: 5,
   });
   const [questions, setQuestions] = useState([]);
 
@@ -19,14 +22,13 @@ export default function MathQuiz() {
     });
   };
 
-  const fetchQuestions = async () => {
-    const response = await fetch(`${API_URL}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(settings),
-    });
-    const data = await response.json();
-    setQuestions(data.questions);
+  const handleFetchQuestions = async () => {
+    try {
+      const newQuestions = await fetchQuestions(settings);
+      setQuestions(newQuestions);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
   };
 
   return (
@@ -35,8 +37,8 @@ export default function MathQuiz() {
       <label>
         <input
           type="checkbox"
-          name="useFraction"
-          checked={settings.useFraction}
+          name="use_fraction"
+          checked={settings.use_fraction}
           onChange={handleChange}
         />
         分数を使用する
@@ -45,8 +47,8 @@ export default function MathQuiz() {
       <label>
         桁数:
         <select
-          name="digitType"
-          value={settings.digitType}
+          name="digit_type"
+          value={settings.digit_type}
           onChange={handleChange}
         >
           <option value={1}>1桁</option>
@@ -59,8 +61,8 @@ export default function MathQuiz() {
       <label>
         <input
           type="checkbox"
-          name="allowNegative"
-          checked={settings.allowNegative}
+          name="allow_negative"
+          checked={settings.allow_negative}
           onChange={handleChange}
         />
         負の数を許可する
@@ -84,8 +86,8 @@ export default function MathQuiz() {
         問題数:
         <input
           type="number"
-          name="numQuestions"
-          value={settings.numQuestions}
+          name="num_questions"
+          value={settings.num_questions}
           min={1}
           max={20}
           onChange={handleChange}
@@ -94,23 +96,16 @@ export default function MathQuiz() {
       <br />
       <button
         className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-        onClick={fetchQuestions}
+        onClick={handleFetchQuestions}
       >
         クイズを生成
       </button>
-      <div className="mt-4">
-        {questions.length > 0 && (
-          <h3 className="text-lg font-bold">生成されたクイズ:</h3>
-        )}
-        <ul>
-          {questions.map((q, index) => (
-            <li key={index} className="mt-2">
-              Q{index + 1}: {JSON.stringify(q)}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <QuizDisplay questions={questions} />
+      <button>
+        <Link to="/">Hello World</Link>
+      </button>
     </div>
   );
-}
+};
 // テスト
+export default MathQuiz;
