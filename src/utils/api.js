@@ -11,7 +11,7 @@ const api = axios.create({
 
 export const fetchMessage = async () => {
   try {
-    const response = await api.get("/hello/");
+    const response = await api.get("/calculation/hello/");
     return response.data;
   } catch (error) {
     console.error("API Error:", error);
@@ -21,12 +21,28 @@ export const fetchMessage = async () => {
 
 export const fetchHello = async () => {
   try {
-    const response = await api.get("/user/");
+    const response = await api.get("/calculation/user/");
     return response.data;
   } catch (error) {
     console.error("API Error:", error);
     throw error;
   }
+};
+
+export const fetchQuestions = async (settings) => {
+  const response = await fetch(
+    "http://localhost:8000/calculation/generate_drill/",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(settings),
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch questions");
+  }
+  const data = await response.json();
+  return data.questions;
 };
 
 export default api;
