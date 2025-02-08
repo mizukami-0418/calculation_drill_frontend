@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { API_URL } from "../config";
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { fetchQuestions } from "../utils/api";
 import QuizDisplay from "./QuizDisplay";
 
